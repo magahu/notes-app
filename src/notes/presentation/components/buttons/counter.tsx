@@ -5,7 +5,7 @@ import { RootState } from '../../../infraestructure/store/store';
 import { useAppDispatch, useAppSelector } from '../../../infraestructure/store/hooks';
 export default function Counter(){
     const count = useSelector((state: RootState) => state.notesReducer.value)
-    const HOLA = useAppSelector(({notesReducer})=>notesReducer.value)
+    const value = useAppSelector(({notesReducer})=>notesReducer.value)
     const dispatch = useAppDispatch()
     return(
         <Stack sx={{ width: '100%' }} maxWidth={'15%'} bgcolor="themeLight.palette.background.default" color="themeLight.palette.primary">
@@ -17,7 +17,7 @@ export default function Counter(){
           Increment
         </button>
         <span>{count}</span>
-        <span>{HOLA}</span>
+        <span>{value}</span>
  
  
         </Stack>

@@ -1,4 +1,4 @@
-import { Card, FormHelperText } from "@mui/material";
+import { Card, FormHelperText, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
@@ -32,7 +32,7 @@ export default function NoteEditForm() {
   const {
     register,
     getValues,
-    formState: { isDirty, isValid, errors },
+    formState: { errors },
   } = useForm<Inputs>({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -61,35 +61,29 @@ export default function NoteEditForm() {
 
   return (
     
-       <Card sx={{ minWidth: 340 }}>
-        <Stack margin='2em 0'>
-            <StateButtons setActualState={setActualState} actualState={actualState}/>
-        </Stack>
-        <Stack padding='1em'>
+    <Stack width='100%'>
+    <Card sx={{width:'100%'}}>
+    <FormControl error={errors.text ? true : false} sx={{width:'100%', padding:'0.3em', margin:'1em 0'}}>
+      <InputLabel htmlFor="my-input">Tarea por realizar:</InputLabel>
+      <Input {...register("text", { required: true })} defaultValue={note.text}/>
+      {errors.text && <FormHelperText>Escribe algo</FormHelperText>}
+      <br />
 
-        
-      <FormControl
-      fullWidth
-        error={errors.text ? true : false}
-      >
-        <InputLabel htmlFor="my-input">Tarea por realizar:</InputLabel>
-        
-        <Input {...register("text", { required: true })}  defaultValue={note.text ? note.text : ''}></Input>
-        {errors.text && <FormHelperText>Escribe algo</FormHelperText>}
-        <br />
-        <Button
-          autoFocus
-          disabled={!isDirty || !isValid ? true : false}
-          type="submit"
-          variant="contained"
-          onClick={()=>updateNotes()}
-        >
-          GUARDAR
-        </Button>
-        
-      </FormControl>
+      <Stack justifyContent="center" alignItems="center" direction="row">
+        <Typography sx={{ color: "GrayText", paddingLeft: "1.3em" }}>
+          Estado:
+        </Typography>
+        <StateButtons
+          actualState={actualState}
+          setActualState={setActualState}
+        />
       </Stack>
-      </Card>
+      <br />
+   
+    </FormControl>
+    </Card>
+    <Button onClick={updateNotes} sx={{margin:'1em 0'}} variant="contained">GUARDAR NOTA</Button>
+  </Stack>
  
   );
 }
